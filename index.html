@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>life of charrito</title>
+    <title>El Bobo</title>
 
     <style>
         html {
@@ -13,47 +13,72 @@
 
         body {
             margin: 0;
-            padding: 0;
             background-color: black;
             color: white;
             font-family: Arial, sans-serif;
             text-align: center;
         }
 
-        h1 {
-            font-size: 70px;
-            font-weight: bold;
-        }
-
         section {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 30px 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 70px;
+            margin-bottom: 20px;
         }
 
         p {
             font-size: 20px;
             color: #aaa;
         }
+
+        /* Contenedor de la imagen */
+        .contenedor-imagen {
+            width: 80%;
+            max-width: 600px;
+            height: 350px;
+            margin-top: 30px;
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: #222;
+        }
+
+        /* Imagen dentro del contenedor */
+        .contenedor-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 
 <body>
 
+    <!-- Primera sección -->
     <section>
-        <h1>Life of Charrito</h1>
-        <p>desliza↓</p>
+        <h1>El Bobo</h1>
+        <p>Desliza hacia abajo ↓</p>
     </section>
 
+    <!-- Segunda sección con imagen -->
     <section>
-        <h1>Esta es la historia de Charrito</h1>
-        <p>Un heroe del comun como tu y yo</p>
+        <h1>Bienvenido</h1>
+
+        <div class="contenedor-imagen">
+            <img src="assets/charrito.jpeg">
+        </div>
     </section>
 
+    <!-- Tercera sección -->
     <section>
-        <h1>A charrito le encontraron nexos con el Clan del Golfo y esta preso en la carcel de sincelejo</h1>
+        <h1>El Final</h1>
     </section>
 
 </body>
