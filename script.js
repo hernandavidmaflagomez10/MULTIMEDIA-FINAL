@@ -18,13 +18,14 @@ function dibujar() {
 function detenerInercia() {
     cancelAnimationFrame(animacion);
     animacion = null;
+    velocidad = 0;
 }
 
 function obtenerAngulo(evento) {
     const x = evento.clientX - centroX;
     const y = evento.clientY - centroY;
 
-    // Evita movimientos inestables cerca del centro.
+    // Cerca del centro el ángulo es inestable.
     if (Math.hypot(x, y) < 20) {
         return null;
     }
@@ -34,7 +35,13 @@ function obtenerAngulo(evento) {
 
 contenedor.addEventListener("pointerdown", (evento) => {
     if (punteroActivo !== null) return;
-    if (evento.pointerType === "mouse" && evento.button !== 0) return;
+
+    if (evento.pointerType === "mouse" && evento.button !== 0) {
+        return;
+    }
+
+    // Evita acciones del navegador al tocar la ruleta.
+    evento.preventDefault();
 
     detenerInercia();
 
@@ -44,7 +51,6 @@ contenedor.addEventListener("pointerdown", (evento) => {
     centroY = limites.top + limites.height / 2;
 
     punteroActivo = evento.pointerId;
-    velocidad = 0;
     anguloAnterior = obtenerAngulo(evento);
     tiempoAnterior = performance.now();
     ultimoMovimiento = tiempoAnterior;
@@ -55,6 +61,8 @@ contenedor.addEventListener("pointerdown", (evento) => {
 
 contenedor.addEventListener("pointermove", (evento) => {
     if (evento.pointerId !== punteroActivo) return;
+
+    evento.preventDefault();
 
     const ahora = performance.now();
     const anguloActual = obtenerAngulo(evento);
@@ -83,9 +91,35 @@ contenedor.addEventListener("pointermove", (evento) => {
     dibujar();
 });
 
+function iniciarInercia() {
+    let ultimoFrame = performance.now();
+
+    function continuarGiro(ahora) {
+        const tiempo = Math.min(ahora - ultimoFrame, 32);
+        ultimoFrame = ahora;
+
+        rotacion += velocidad * tiempo;
+
+        // Reduce la velocidad progresivamente.
+        velocidad *= Math.pow(0.95, tiempo / 16.67);
+
+        dibujar();
+
+        if (Math.abs(velocidad) > 0.005) {
+            animacion = requestAnimationFrame(continuarGiro);
+        } else {
+            velocidad = 0;
+            animacion = null;
+        }
+    }
+
+    animacion = requestAnimationFrame(continuarGiro);
+}
+
 function terminarArrastre(evento, usarInercia) {
     if (evento.pointerId !== punteroActivo) return;
 
+    // Se limpia antes de liberar la captura para evitar duplicados.
     punteroActivo = null;
     contenedor.classList.remove("arrastrando");
 
@@ -105,28 +139,9 @@ function terminarArrastre(evento, usarInercia) {
         velocidad = 0;
     }
 
-    if (Math.abs(velocidad) < 0.005) return;
-
-    let ultimoFrame = performance.now();
-
-    function continuarGiro(ahora) {
-        const tiempo = Math.min(ahora - ultimoFrame, 32);
-        ultimoFrame = ahora;
-
-        rotacion += velocidad * tiempo;
-        velocidad *= Math.pow(0.95, tiempo / 16.67);
-
-        dibujar();
-
-        if (Math.abs(velocidad) > 0.005) {
-            animacion = requestAnimationFrame(continuarGiro);
-        } else {
-            velocidad = 0;
-            animacion = null;
-        }
+    if (Math.abs(velocidad) > 0.005) {
+        iniciarInercia();
     }
-
-    animacion = requestAnimationFrame(continuarGiro);
 }
 
 contenedor.addEventListener("pointerup", (evento) => {
@@ -141,10 +156,18 @@ contenedor.addEventListener("lostpointercapture", (evento) => {
     terminarArrastre(evento, false);
 });
 
+// Impide arrastrar el archivo de imagen con el mouse.
+imagen.addEventListener("dragstart", (evento) => {
+    evento.preventDefault();
+});
+
+// Permite girar la ruleta con las flechas del teclado.
 imagen.addEventListener("keydown", (evento) => {
     if (evento.key !== "ArrowLeft" && evento.key !== "ArrowRight") {
         return;
     }
+
+    if (punteroActivo !== null) return;
 
     evento.preventDefault();
     detenerInercia();
