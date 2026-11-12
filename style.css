@@ -1,0 +1,106 @@
+
+/* CONFIGURACIÓN GENERAL */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* SECCIONES */
+
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+/* TÍTULOS */
+
+h1 {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+/* PÁRRAFOS */
+
+p {
+    font-size: 20px;
+    color: #aaa;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+/* IMAGEN DE CHARRITO */
+
+.contenedor-imagen {
+    width: 80%;
+    max-width: 600px;
+    height: 350px;
+    margin-top: 30px;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #222;
+}
+
+.contenedor-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* TRES FIGURAS VERDES */
+
+.contenedor-verdes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.contenedor-verdes img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+/* EFECTO AL PASAR EL MOUSE */
+
+.contenedor-verdes img:hover {
+    transform: scale(1.2);
+}
+
+/* ADAPTACIÓN PARA CELULARES */
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 38px;
+    }
+
+    p {
+        font-size: 17px;
+    }
+
+    .contenedor-imagen {
+        width: 95%;
+        height: 250px;
+    }
+
+    .contenedor-verdes img {
+        width: 120px;
+        height: 120px;
+    }
+}
