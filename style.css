@@ -1,0 +1,90 @@
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* Todas las secciones */
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+/* Títulos */
+h1 {
+    font-size: 70px;
+    margin-bottom: 20px;
+}
+
+/* Párrafos */
+p {
+    font-size: 20px;
+    color: #aaa;
+}
+
+/* Contenedor de la imagen de Charrito */
+.contenedor-imagen {
+    width: 80%;
+    max-width: 600px;
+    height: 350px;
+    margin-top: 30px;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #222;
+}
+
+/* Imagen de Charrito */
+.contenedor-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Contenedor de las tres figuras verdes */
+.contenedor-verdes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* Imágenes verdes */
+.contenedor-verdes img {
+    width: 180px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 600px) {
+
+    h1 {
+        font-size: 40px;
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+    .contenedor-verdes img {
+        width: 100px;
+    }
+
+    .contenedor-verdes {
+        gap: 15px;
+    }
+}
